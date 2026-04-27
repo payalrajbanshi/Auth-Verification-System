@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace AuthVerification.Core.src.UserFeature.DTOs
 {
-    internal class ForgotPasswordDTO
+    public class ForgotPasswordDTO
     {
+        public string Email { get; set; } = null!;
     }
 }
