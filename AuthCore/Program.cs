@@ -1,17 +1,20 @@
 using AuthVerification.Authorization;
+using AuthVerification.Core.src.OrganizationsFeature.Interfaces;
+using AuthVerification.Core.src.OrganizationsFeature.Services;
 using AuthVerification.Core.src.UserFeature.DTOs;
 using AuthVerification.Core.src.UserFeature.Interfaces;
 using AuthVerification.Core.src.UserFeature.Services;
 using AuthVerification.Dbal.DbContexts;
 using AuthVerification.Dbal.DbModels;
 using AuthVerification.Dbal.Repositories;
-using AuthVerification.Core.src.OrganizationsFeature.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using AuthVerification.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using AuthVerification.Dbal;
 using Syncfusion.Licensing;
 using System.Text;
 
@@ -31,20 +34,18 @@ builder.Services.AddHttpContextAccessor();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(
-            builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
+
+builder.Services.AddDbContext<EntityDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
 builder.Services.AddScoped<DatabaseSeeder>();
-builder.Services.AddDbContext<EntityDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(
-            builder.Configuration.GetConnectionString("DefaultConnection"))
-    )
-);
+
 
 var JwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(JwtSettings["key"]);
@@ -80,7 +81,11 @@ builder.Services.AddAuthentication(options =>
     options.AccessDeniedPath = "/Account/AccessDenied";
     options.ExpireTimeSpan = TimeSpan.FromHours(1);
 });
-
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ActiveUserOnly", policy =>
+        policy.Requirements.Add(new ActiveUserRequirement()));
+});
 
 builder.Services.AddScoped<IAuthorizationHandler, ActiveUserHandler>();
 

@@ -1,6 +1,8 @@
-﻿namespace AuthVerification.Authorization
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace AuthVerification.Authorization
 {
-    public class ActiveUserRequirement
+    public class ActiveUserRequirement: IAuthorizationRequirement
     {
     }
 }

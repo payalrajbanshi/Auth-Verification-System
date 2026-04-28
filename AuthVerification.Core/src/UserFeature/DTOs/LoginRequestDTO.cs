@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AuthVerification.Core.src.UserFeature.DTOs
 {
-    public class VerifyEmailDTO
+    public class LoginRequestDTO
     {
-        public string TempEmail { get; set; }
-        public string Pin { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }
