@@ -22,7 +22,7 @@ namespace AuthVerification.Core.src.UserFeature.Entities
             User,
             Organization
         }
-        public long UserId { get; private set; }
+        public int UserId { get; private set; }
         public string Name { get; set; }
         public string Username { get; set; }
         public string? MobileNo { get; set; }
@@ -42,7 +42,7 @@ namespace AuthVerification.Core.src.UserFeature.Entities
         public bool RowStatus { get; set; } = true;
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public long CreatedByUserId { get; set; }
-        public UserEntity(long userId, UserStatus status) : this()
+        public UserEntity(int userId, UserStatus status) : this()
         {
             UserId = userId;
             Status = status;

@@ -17,7 +17,7 @@ namespace AuthVerification.Authorization
         {
             var userIdStr = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (Guid.TryParse(userIdStr, out var userId))
+            if (long.TryParse(userIdStr, out var userId))
             {
                 var user = await _appDbContext.Users.FindAsync(userId);
                 if (user != null && user.Status == UserEntity.UserStatus.Active)

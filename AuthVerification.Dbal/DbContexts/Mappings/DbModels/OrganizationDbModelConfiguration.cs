@@ -72,15 +72,13 @@ namespace AuthVerification.Dbal.DbContexts.Mappings.DbModels
 
             builder.Property(o => o.Status)
                 .HasColumnName("status")
-                .HasColumnType("tinyint(1)")
-                .HasConversion<bool>()
+                .HasColumnType("bit")
                 .HasDefaultValue(true)
                 .IsRequired();
 
             builder.Property(o => o.RowStatus)
                 .HasColumnName("row_status")
-                .HasColumnType("tinyint(1)")
-                .HasConversion<bool>()
+                .HasColumnType("bit")
                 .HasDefaultValue(true)
                 .IsRequired();
 

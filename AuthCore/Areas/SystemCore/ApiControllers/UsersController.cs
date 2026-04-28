@@ -42,24 +42,13 @@ namespace AuthVerification.Areas.SystemCore.ApiControllers
         }
 
         [HttpPost("update")]
-        public async Task<IActionResult> UpdateUser(long userId, [FromBody] UpdateViewModel model)
+        public async Task<IActionResult> UpdateUser(long userId, [FromBody] UpdateUserDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var user = await _db.Users.FindAsync(userId);
-            if (user == null)
-                return NotFound(new { message = "User not found" });
-            user.Name = model.Name;
-            user.Username = model.Username;
-            user.Email = model.Email;
-            user.MobileNo = model.MobileNo;
-            // user.UserType = model.UserType;
-            user.UserType = Enum.Parse<UserEntity.UserRole>(model.UserType);
 
-
-            await _db.SaveChangesAsync();
+            await _userService.UpdateUserAsync(dto);
             return Ok(new { message = "user updated successfully" });
-
         }
         [HttpPut("{userId}/activate")]
         public async Task<IActionResult> ActivateUser([FromRoute] long userId)

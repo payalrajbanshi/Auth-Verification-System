@@ -11,7 +11,7 @@ namespace AuthVerification.Dbal.DbModels
     public class UserDbModel
     {
         [Key]
-        public long UserId { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Username { get; set; } = null!;
         public string? MobileNo { get; set; }

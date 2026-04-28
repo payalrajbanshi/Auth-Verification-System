@@ -7,6 +7,8 @@ using static AuthVerification.Core.src.UserFeature.Entities.UserEntity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using AuthVerification.Core.src.UserFeature.DTOs;
+using AuthVerification.Core.src.OrganizationsFeature.DTOs;
 namespace AuthVerification.Areas.SystemCore.ApiControllers
 {
     [ApiController]
